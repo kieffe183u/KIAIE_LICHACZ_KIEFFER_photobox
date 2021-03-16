@@ -5,6 +5,7 @@ import * as config from "./config.js";
 
 
 export function display_lightbox( data ){
+    console.log(data)
     let div = document.querySelector('#lightbox_container')
     div.innerHTML = `<div id="lightbox">
     <div id="lightbox-head">
@@ -14,7 +15,10 @@ export function display_lightbox( data ){
 
     <div id="lightbox-img">
         <img id="lightbox_full_img" src="${config.urlWebetu + data.photo.url.href}">
+        <h2 class="title_desc">Description : </h2>
+        <p class="description"> ${data.photo.descr}</p>
     </div>
+
 </div>`;
 show();
 
