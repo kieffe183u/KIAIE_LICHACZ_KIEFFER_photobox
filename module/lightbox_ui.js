@@ -6,7 +6,7 @@ import * as config from "./config.js";
 
 export function display_lightbox( data ){
     let div = document.querySelector('#lightbox_container')
-    div.innerHTML += `<div id="lightbox">
+    div.innerHTML = `<div id="lightbox">
     <div id="lightbox-head">
         <p id="lightbox_close">X</p>
         <h1 id="lightbox_title">${data.photo.titre}</h1>

@@ -3,19 +3,34 @@ import * as config from './config.js'
 
 
 var url = '/www/canals5/photobox/photos';
+var promesse;
+var obj;
+
+
 
 export function load(){
-    return photoloader.loadRessource(config.urlWebetu +url);
+    promesse = photoloader.loadRessource(config.urlWebetu + url);
+    promesse.then(value => {
+        obj = value;
+    })
+    return promesse;
 }
 
 
-export function next(next){
-    url = next;
-    load();
+export function next(){
+    url = obj.links.next.href;
 }
 
 
-export function prev(prev){
-    url = prev;
-    load();
+export function prev(){
+    url = obj.links.prev.href;
+}
+
+export function first(){
+    url = obj.links.first.href;
+}
+
+
+export function last(){
+    url = obj.links.last.href;
 }
