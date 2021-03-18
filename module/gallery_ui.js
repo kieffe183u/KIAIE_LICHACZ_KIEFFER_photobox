@@ -18,8 +18,7 @@ export function display_galerie(galerie) {
 
     container.querySelectorAll(".vignette").forEach(v=>{
         v.addEventListener('click', e=> {
-            console.log(e.target.getAttribute('data-uri'))
-            lightbox.loaded(e.target.getAttribute('data-uri')).then(lightbox_ui.display_lightbox);
+            lightbox.loaded(e.target).then(lightbox_ui.display_lightbox);
         })
     })
 
