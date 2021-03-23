@@ -4,7 +4,7 @@ import * as lightbox_ui from "./lightbox_ui.js";
 
 
 export function display_galerie(galerie) {
-    
+   
     let container = document.querySelector('#gallery_container');
     container.innerHTML = galerie.photos.reduce( (acc, elem) => {
        

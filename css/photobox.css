@@ -147,7 +147,7 @@ nav #next {
 }
 
 
-.description , .title_desc {
+.description , .title_desc, .title_com {
   color:white;
   background-color: rgba(0, 0, 0, 0.6);
 }

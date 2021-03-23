@@ -6,22 +6,37 @@ import * as lightbox_ui from "./lightbox_ui.js";
 
 let url;
 let obj;
+let com;
 let promesse;
 
-export function loaded(node){
+export async function loaded(node){
    obj = node.parentNode;
    url = node.getAttribute('data-uri')
-   return  photoloader.loadRessource(config.urlWebetu +'' +url);
+   promesse = await photoloader.loadRessource(config.urlWebetu + url).then(value => {
+      return value;
+  });
+
+ 
+   let com = await photoloader.loadRessource(config.urlWebetu + promesse.links.comments.href).then(value => {
+      return value;
+   });
+  
+   let data = {
+      photo : promesse,
+      commentaire : com
+   }
+  
+   return data
  
 }
 
 
 
-export function next(){
+export async function next(){
    obj = obj.nextElementSibling;
    if(obj == null){
       gallery.next();
-      gallery.load().then(gallery_ui.display_galerie);
+     await gallery.load().then(gallery_ui.display_galerie);
       let container = document.querySelector('#gallery_container');
       obj = container.firstElementChild;
       obj = obj.getElementsByTagName('img')[0]
@@ -32,11 +47,11 @@ export function next(){
 }
 
 
-export function prev(){
+export  async function prev(){
    obj = obj.previousElementSibling;
    if(obj == null){
       gallery.prev();
-      gallery.load().then(gallery_ui.display_galerie);
+     await gallery.load().then(gallery_ui.display_galerie);
       let container = document.querySelector('#gallery_container');
       obj = container.lastElementChild;
       obj = obj.getElementsByTagName('img')[0]
