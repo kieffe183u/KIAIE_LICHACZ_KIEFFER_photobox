@@ -4,7 +4,8 @@ import * as lightbox from "./lightbox.js";
 
 
 
-export function display_lightbox( data ){
+export async function display_lightbox( data ){
+    console.log(data.photo.links.comments.href)
     let div = document.querySelector('#lightbox_container')
     div.innerHTML = `<div id="lightbox">
     <div id="lightbox-head">
@@ -43,10 +44,11 @@ export function display_lightbox( data ){
         `
        
     }, )
-    +`</div>`;
+    +`</div>`
+    show();
+
     
-    const form = document.getElementById('reponse');
-    form.addEventListener('click', function(){
+    document.getElementById('reponse').addEventListener('click', function(){
         var today = new Date();
         var dd = String(today.getDate()).padStart(2, '0');
         var mm = String(today.getMonth() + 1).padStart(2, '0');
@@ -56,37 +58,22 @@ export function display_lightbox( data ){
         let p = document.querySelector('.pseudo').value
         let t = document.querySelector('.titre').value
         let c = document.querySelector('.content').value
-        const data = new FormData(this)
         let json_data = JSON.stringify({
             titre : t,
             pseudo : p,
             content : c,
             date : today
         })
-
-        fetch( config.urlWebetu + data.photo.photo.links.comments , {
+       
+        fetch( config.urlWebetu +data.photo.links.comments.href, {
             method: 'POST',
-            doby: json_data,
+            body: json_data,
             credentials: 'include',
-            headers:{
-                'Content-Type': "application/json"
-            }
-        })
-
-
+            headers:{ 'Content-Type': "application/json;charset=utf8" }
+        }).then(display_lightbox)
 
     })
-    /*
-    const express = require('express');
-    const app = express();
-    app.listen(3000, ()=> console.log('listening at 3000'));
-    app.use(express.static('public'));
 
-    app.post('/api', (request, response)=> {
-        console.log(request);
-    });
-    */
-show();
 
 document.getElementById('lightbox_close').addEventListener('click', e=>{
     hide()
